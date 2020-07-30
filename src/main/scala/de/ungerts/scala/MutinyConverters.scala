@@ -6,7 +6,7 @@ import io.smallrye.mutiny.Uni
 import scala.concurrent.Future
 import scala.compat.java8.FutureConverters._
 
-class MutinyConverters {
+object MutinyConverters {
 
     implicit class FutureImprovements[T](val f: Future[T]) {
 
