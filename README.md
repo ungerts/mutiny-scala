@@ -4,11 +4,13 @@ Converts [Scala](https://www.scala-lang.org/) ```Future``` to [Mutiny](https://s
 
 ## Example
 
+Using Futures and Mutiny
+
 ```scala
 package de.ungerts.scala.test
 
 import io.smallrye.mutiny.Uni
-import de.ungerts.scala.MutinyConverters._
+import de.ungerts.mutiny.scala.MutinyConverters._
 
 import scala.concurrent.ExecutionContext
 
@@ -23,5 +25,29 @@ object MutinyScalaExample extends App {
         s"$hello $world!"
     }
     println(resultFuture.toUni.await().indefinitely())
+}
+
+```
+
+Using Scala for comprehension
+
+```scala
+package de.ungerts.scala.test
+
+import de.ungerts.mutiny.scaladsl.Uni
+
+object MutinyScaladslExample extends App {
+
+    val helloUni = Uni.createFrom().item("Hello")
+    val worldUni = Uni.createFrom().item("World")
+
+    val resultUni = for {
+        hello <- helloUni
+        world <- worldUni
+    } yield {
+        s"$hello $world!"
+    }
+    println(resultUni.javaUni.await().indefinitely())
+
 }
 ```
